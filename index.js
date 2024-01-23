@@ -7,8 +7,15 @@ const cors = require('cors')
 require('dotenv').config()
 
 app.use(cors())
-app.use(express.static(process.cwd()+'public'))
+app.use('/static', express.static(path.join(__dirname, 'public'), { 
+  setHeaders: (res, filePath) => {
+    if (path.extname(filePath) === '.css') {
+      res.setHeader('Content-Type', 'text/css');
+    }
+  },
+}));
 app.get('/', (req, res) => {
+  console.log(process.cwd()+'public',"path")
   res.sendFile(__dirname + '/views/index.html')
 });
 
