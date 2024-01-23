@@ -15,7 +15,6 @@ app.use('/static', express.static(path.join(__dirname, 'public'), {
   },
 }));
 app.get('/', (req, res) => {
-  console.log(process.cwd()+'public',"path")
   res.sendFile(__dirname + '/views/index.html')
 });
 
@@ -33,6 +32,7 @@ const formatDate = (date) => {
 // Create a new user
 app.post('/api/users', (req, res) => {
   const { username } = req.body;
+
   const newUser = { username, _id: (users.length + 1).toString() };
   users.push(newUser);
   res.json(newUser);
@@ -76,7 +76,6 @@ app.post('/api/users/:_id/exercises', (req, res) => {
 app.get('/api/users/:_id/logs', (req, res) => {
   const { _id } = req.params;
   const { from, to, limit } = req.query;
-
   const user = users.find(u => u._id === _id);
 
   if (!user) {
