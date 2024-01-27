@@ -7,7 +7,7 @@ const cors = require('cors')
 require('dotenv').config()
 
 app.use(cors())
-app.use('/static', express.static(path.join(__dirname, 'public'), { 
+app.use(express.static(path.join(__dirname, 'public'), { 
   setHeaders: (res, filePath) => {
     if (path.extname(filePath) === '.css') {
       res.setHeader('Content-Type', 'text/css');
