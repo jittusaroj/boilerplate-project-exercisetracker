@@ -26,7 +26,7 @@ const users = [];
 
 // Utility function to format dates
 const formatDate = (date) => {
-  return new Date(date).dateString();
+  return new Date(date).toDateString();
 };
 
 // Create a new user
