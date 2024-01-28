@@ -53,7 +53,9 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
-  const formattedDate = new Date(date).toDateString();
+  const formattedDate = moment(date, 'YYYY-MM-DD', true).isValid()
+    ? moment(date, 'YYYY-MM-DD').toDateString()
+    : moment().toDateString();
 
   const exercise = {
     description,
@@ -87,7 +89,8 @@ app.get('/api/users/:_id/logs', (req, res) => {
     const toDate = to ? moment(to, 'YYYY-MM-DD') : moment();
 
     logs = logs.filter((log) =>
-      moment(log.date).isBetween(fromDate, toDate, null, '[]')
+      moment(log.date, 'ddd MMM DD YYYY', true).isValid() &&
+      moment(log.date, 'ddd MMM DD YYYY').isBetween(fromDate, toDate, null, '[]')
     );
   }
 
@@ -99,7 +102,7 @@ app.get('/api/users/:_id/logs', (req, res) => {
   logs = logs.map((log) => ({
     description: log.description,
     duration: log.duration,
-    date: moment(log.date).format('ddd MMM DD YYYY'), // Use moment for formatting
+    date: moment(log.date, 'ddd MMM DD YYYY').format('ddd MMM DD YYYY'), // Use moment for formatting
   }));
 
   res.json({
