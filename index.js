@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const users = [];
 
 // Utility function to format dates
-const formatDate = (date) => new Date(date).toDateString();
+const formatDate = (date) => moment(date, 'ddd MMM DD YYYY').format('ddd MMM DD YYYY');
 
 // Create a new user
 app.post('/api/users', (req, res) => {
@@ -54,8 +54,8 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   }
 
   const formattedDate = moment(date, 'YYYY-MM-DD', true).isValid()
-    ? moment(date, 'YYYY-MM-DD').toDateString()
-    : moment().toDateString();
+    ? moment(date, 'YYYY-MM-DD').format('ddd MMM DD YYYY')
+    : moment().format('ddd MMM DD YYYY');
 
   const exercise = {
     description,
