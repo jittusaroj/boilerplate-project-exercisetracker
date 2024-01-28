@@ -32,6 +32,7 @@ app.post('/api/users', (req, res) => {
   const { username } = req.body;
 
   const newUser = { username, _id: (users.length + 1).toString() };
+  newUser.exercises = []; // Initialize exercises array
   users.push(newUser);
   res.json(newUser);
 });
@@ -60,7 +61,6 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     date: formattedDate, // Use the formatted date here
   };
 
-  user.exercises = user.exercises || [];
   user.exercises.push(exercise);
 
   res.json({
